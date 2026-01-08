@@ -1,3 +1,4 @@
+//statcard.jsx
 export default function StatCard({ title, value, status }) {
   return (
     <div className="bg-white rounded-xl shadow p-4 flex justify-between items-center">

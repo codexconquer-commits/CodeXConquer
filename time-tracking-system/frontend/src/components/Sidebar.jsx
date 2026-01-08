@@ -1,3 +1,4 @@
+// sidebar.jsx
 import { BarChart, LogOut } from "lucide-react";
 
 export default function Sidebar() {
