@@ -1,30 +1,39 @@
 package com.codexconquer.timetracking.controller;
 
-import com.codexconquer.timetracking.dto.RegisterRequest;
+import com.codexconquer.timetracking.dto.LoginRequest;
 import com.codexconquer.timetracking.entity.User;
+import com.codexconquer.timetracking.security.JwtUtil;
 import com.codexconquer.timetracking.service.UserService;
 import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
-import com.codexconquer.timetracking.dto.LoginRequest;
+
+import java.util.Map;
+
 @RestController
 @RequestMapping("/api/auth")
+@RequiredArgsConstructor
 public class AuthController {
 
     private final UserService userService;
-
-    public AuthController(UserService userService) {
-        this.userService = userService;
-    }
-
-    @PostMapping("/register")
-    public User register(@Valid @RequestBody RegisterRequest request) {
-        return userService.register(request);
-    }
-
+    private final JwtUtil jwtUtil;
 
     @PostMapping("/login")
-    public User login(@Valid @RequestBody LoginRequest request) {
-        return userService.login(request);
-    }
+    public Map<String, Object> login(@RequestBody @Valid LoginRequest request) {
 
+        // Authenticate user
+        User user = userService.login(request);
+
+        // Generate JWT token
+        String token = jwtUtil.generateToken(user.getId(), user.getEmail());
+
+        // Return token + basic user info
+        return Map.of(
+                "token", token,
+                "id", user.getId(),
+                "fullName", user.getFullName(),
+                "email", user.getEmail(),
+                "role", user.getRole()
+        );
+    }
 }

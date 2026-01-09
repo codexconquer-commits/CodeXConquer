@@ -72,4 +72,5 @@ public class TimeEntryService {
 
         return new TimeSummaryResponse(totalMinutes, hours, minutes);
     }
+
 }

@@ -5,13 +5,14 @@ import lombok.*;
 
 import java.time.Duration;
 import java.time.LocalDateTime;
+
 @Entity
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class TimeEntry {
+public class StatusEntry {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -21,14 +22,16 @@ public class TimeEntry {
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
-    private LocalDateTime punchInTime;
-    private LocalDateTime punchOutTime;
-    private LocalDateTime workDate;
+    @Enumerated(EnumType.STRING)
+    private WorkStatus status;
+
+    private LocalDateTime startTime;
+    private LocalDateTime endTime;
 
     @Transient
-    public long getWorkedMinutes() {
-        if (punchInTime != null && punchOutTime != null) {
-            return Duration.between(punchInTime, punchOutTime).toMinutes();
+    public long getDurationMinutes() {
+        if (startTime != null && endTime != null) {
+            return Duration.between(startTime, endTime).toMinutes();
         }
         return 0;
     }
