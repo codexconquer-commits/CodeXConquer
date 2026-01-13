@@ -2,6 +2,11 @@
 import { BarChart, LogOut } from "lucide-react";
 
 export default function Sidebar() {
+  const logout = () => {
+    localStorage.clear();
+    window.location.href = "/login";
+  };
+
   return (
     <aside className="w-64 bg-white shadow flex flex-col p-4">
       {/* Logo */}
@@ -28,7 +33,11 @@ export default function Sidebar() {
         <button className="w-full flex gap-2 items-center text-left px-3 py-2 rounded-lg bg-blue-100 text-blue-600">
           <BarChart size={18} /> Dashboard
         </button>
-        <button className="w-full flex gap-2 items-center text-left px-3 py-2 rounded-lg text-gray-600 hover:bg-gray-100 active:bg-gray-200">
+        <button
+          onClick={logout}
+          title="Logout"
+          className="w-full flex gap-2 items-center text-left px-3 py-2 rounded-lg text-gray-600 hover:bg-gray-100 active:bg-gray-200"
+        >
           <LogOut size={18} /> Logout
         </button>
       </nav>

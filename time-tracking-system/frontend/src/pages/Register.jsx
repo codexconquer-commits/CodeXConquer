@@ -1,39 +1,39 @@
-//register.jsx
+// register.jsx
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import api from "../services/api";
 
 export default function Register() {
   const navigate = useNavigate();
-
-  const [formData, setFormData] = useState({
-    name: "",
-    email: "",
-    password: "",
-    role: "Candidate",
-  });
-
+  const [fullName, setFullName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
+  const [error, setError] = useState("");
 
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData((prev) => ({
-      ...prev,
-      [name]: value,
-    }));
-  };
-
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
+    setError("");
 
-    console.log("Register Data:", formData);
+    try {
+      await api.post("/api/auth/register", {
+        fullName,
+        email,
+        password,
+      });
 
-    // simulate API call
-    setTimeout(() => {
-      setLoading(false);
       navigate("/login");
-    }, 1500);
+    } catch (err) {
+      console.error(err);
+
+      setError(
+        err.response?.data?.message || "Registration failed. Try again."
+      );
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -48,6 +48,11 @@ export default function Register() {
           <p className="text-gray-500 mt-1">Candidate Registration</p>
         </div>
 
+        {/* Error */}
+        {error && (
+          <p className="text-red-500 text-sm text-center mb-3">{error}</p>
+        )}
+
         {/* Form */}
         <form onSubmit={handleSubmit} className="space-y-4">
           {/* Name */}
@@ -57,9 +62,9 @@ export default function Register() {
             </span>
             <input
               type="text"
-              name="name"
-              value={formData.name}
-              onChange={handleChange}
+              name="fullName"
+              value={fullName}
+              onChange={(e) => setFullName(e.target.value)}
               placeholder="Full Name"
               required
               className="w-full pl-10 pr-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 outline-none"
@@ -74,8 +79,8 @@ export default function Register() {
             <input
               type="email"
               name="email"
-              value={formData.email}
-              onChange={handleChange}
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
               placeholder="Email"
               required
               className="w-full pl-10 pr-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 outline-none"
@@ -90,8 +95,8 @@ export default function Register() {
             <input
               type={showPassword ? "text" : "password"}
               name="password"
-              value={formData.password}
-              onChange={handleChange}
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
               placeholder="Password"
               required
               className="w-full pl-10 pr-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 outline-none"
@@ -127,30 +132,6 @@ export default function Register() {
           </Link>
         </p>
       </div>
-    </div>
-  );
-}
-
-/* ---------------- Helper Component ---------------- */
-
-function SelectField({ label, name, value, onChange }) {
-  return (
-    <div>
-      <label className="text-xs text-gray-500">{label}</label>
-      <select
-        name={name}
-        value={value}
-        onChange={onChange}
-        required
-        className="w-full mt-1 px-3 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 outline-none text-sm"
-      >
-        <option value="">Select</option>
-        <option value="0-1">0 – 1 hr</option>
-        <option value="1-2">1 – 2 hrs</option>
-        <option value="2-4">2 – 4 hrs</option>
-        <option value="4-6">4 – 6 hrs</option>
-        <option value="6+">6+ hrs</option>
-      </select>
     </div>
   );
 }

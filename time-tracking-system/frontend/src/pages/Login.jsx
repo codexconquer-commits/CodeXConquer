@@ -1,24 +1,36 @@
-//login.jsx
+// login.jsx
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import api from "../services/api"; // import axios instance
 
 export default function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
 
   const navigate = useNavigate();
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
+    setError("");
 
-    // simulate login
-    setTimeout(() => {
-      setLoading(false);
+    try {
+      const response = await api.post("/api/auth/login", {
+        email,
+        password,
+      });
+      localStorage.setItem("token", response.data.token);
+      localStorage.setItem("user", JSON.stringify(response.data.user));
       navigate("/dashboard");
-    }, 1500);
+    } catch (err) {
+      console.error(err);
+      setError(err.response?.data?.message || "Invalid email or password");
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -32,6 +44,11 @@ export default function Login() {
           </div>
           <p className="text-gray-500 mt-1">Login</p>
         </div>
+
+        {/* Error Message */}
+        {error && (
+          <p className="text-red-500 text-sm text-center mb-3">{error}</p>
+        )}
 
         {/* Form */}
         <form onSubmit={handleSubmit} className="space-y-4">
