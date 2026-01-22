@@ -23,7 +23,8 @@ export default function Register() {
         email,
         password,
       });
-
+      console.log("here 1");
+      
       navigate("/login");
     } catch (err) {
       console.error(err);
