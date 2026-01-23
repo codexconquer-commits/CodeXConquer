@@ -1,4 +1,6 @@
 package com.codexconquer.timetracking.security;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 import org.springframework.context.annotation.Bean;
@@ -28,13 +30,6 @@ public class SecurityConfig {
         return http.build();
     }
 
-<<<<<<< HEAD
-    // 🔥 THIS IS WHAT WAS MISSING
-    @Bean
-    public PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();
-    }
+
+
 }
-=======
-}
->>>>>>> 85e2a63 ( JWT auth, MySQL integration, status tracking, summary APIs)

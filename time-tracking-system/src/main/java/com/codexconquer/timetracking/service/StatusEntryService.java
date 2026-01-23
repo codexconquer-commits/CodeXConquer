@@ -7,13 +7,14 @@ import com.codexconquer.timetracking.exception.AuthException;
 import com.codexconquer.timetracking.repository.StatusEntryRepository;
 import com.codexconquer.timetracking.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import com.codexconquer.timetracking.entity.WorkStatus;
 
 import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.*;
-
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class StatusEntryService {
