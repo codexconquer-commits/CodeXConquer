@@ -12,6 +12,7 @@ import java.util.Date;
 @Component
 public class JwtUtil {
 
+
     // Secret key used to sign JWT
     private final Key key = Keys.secretKeyFor(SignatureAlgorithm.HS256);
 

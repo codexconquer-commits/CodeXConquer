@@ -25,17 +25,15 @@ public class AuthController {
     }
 
     @PostMapping("/login")
-    public Map<String, Object> login(@RequestBody @Valid LoginRequest request) {
+    public Map<String, String> login(@RequestBody LoginRequest request) {
 
-        User user = userService.login(request);
+        User user = userService.login(request);   // validates email + password
         String token = jwtUtil.generateToken(user.getId(), user.getEmail());
 
         return Map.of(
                 "token", token,
-                "id", user.getId(),
-                "fullName", user.getFullName(),
-                "email", user.getEmail(),
-                "role", user.getRole()
+                "userId", user.getId().toString()
         );
     }
+
 }
