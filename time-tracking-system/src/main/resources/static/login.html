@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Time Tracking Login</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <style>
+        /* RESET */
+        *{
+            margin:0;
+            padding:0;
+            box-sizing:border-box;
+            font-family: "Segoe UI", sans-serif;
+        }
+
+        /* UNIFIED BACKGROUND */
+        body{
+            min-height:100vh;
+            background:
+              linear-gradient(
+                rgba(255,255,255,0.2),
+                rgba(255,255,255,0.2)
+              ),
+              url("/images/bg-blue.jpg");
+            background-size:cover;
+            background-position:center;
+            background-repeat:no-repeat;
+
+            display:flex;
+            justify-content:center;
+            align-items:center;
+        }
+
+        /* MAIN CARD */
+        .container{
+            width:900px;
+            height:500px;
+            background:#fff;
+            border-radius:20px;
+            display:flex;
+            overflow:hidden;
+            box-shadow:0 12px 35px rgba(0,0,0,0.25);
+        }
+
+        /* LEFT SIDE */
+        .left{
+            width:40%;
+            padding:40px;
+            display:flex;
+            flex-direction:column;
+            justify-content:center;
+        }
+
+        .left h2{
+            font-size:28px;
+            margin-bottom:10px;
+        }
+
+        .left p{
+            color:#666;
+            margin-bottom:25px;
+        }
+
+        /* INPUTS */
+        .input-box{
+            margin-bottom:15px;
+            position:relative;
+        }
+
+        .input-box label{
+            font-size:14px;
+        }
+
+        .input-box input{
+            width:100%;
+            padding:10px 40px 10px 10px;
+            border-radius:8px;
+            border:1px solid #ccc;
+            margin-top:5px;
+        }
+
+        /* SHOW/HIDE PASSWORD */
+        .toggle-password{
+            position:absolute;
+            right:12px;
+            top:36px;
+            cursor:pointer;
+            font-size:13px;
+            color:#555;
+            user-select:none;
+        }
+
+        /* BUTTONS */
+        .login-btn{
+            background:#2c3e50;
+            color:white;
+            padding:12px;
+            border:none;
+            border-radius:10px;
+            cursor:pointer;
+            margin-top:10px;
+        }
+
+        .login-btn:hover{
+            background:#1f2d3a;
+        }
+
+        .google-btn{
+            margin-top:10px;
+            padding:12px;
+            border-radius:10px;
+            border:1px solid #ccc;
+            background:white;
+            cursor:pointer;
+            display:flex;
+            align-items:center;
+            justify-content:center;
+            gap:8px;
+            font-weight:500;
+        }
+
+        .google-btn:hover{
+            background:#f2f2f2;
+        }
+
+        /* SIGNUP */
+        .signup{
+            margin-top:15px;
+            font-size:14px;
+        }
+
+        .signup a{
+            text-decoration:none;
+            color:#2c3e50;
+            font-weight:bold;
+        }
+
+        /* RIGHT SIDE */
+        .right{
+            width:60%;
+            background:#f5f8fb;
+            display:flex;
+            justify-content:center;
+            align-items:center;
+        }
+
+        .right img{
+            width:80%;
+        }
+
+        /* RESPONSIVE */
+        @media(max-width:768px){
+            .container{
+                flex-direction:column;
+                height:auto;
+                width:90%;
+            }
+            .left, .right{
+                width:100%;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <!-- LEFT -->
+    <div class="left">
+        <h2>Welcome Mate👋</h2>
+        <p>Log in to track your work hours</p>
+
+        <div class="input-box">
+            <label>Email</label>
+            <input type="email" id="email" placeholder="Enter email" required>
+        </div>
+
+        <div class="input-box">
+            <label>Password</label>
+            <input type="password" id="password" placeholder="Enter password" required>
+            <span class="toggle-password" onclick="togglePassword()">Show</span>
+        </div>
+
+        <button class="login-btn" onclick="loginUser()">Login</button>
+
+        <button class="google-btn" onclick="googleLogin()">
+            🔐 Sign in with Google
+        </button>
+
+        <div class="signup">
+            Don't have an account? <a href="#">Sign Up</a>
+        </div>
+    </div>
+
+    <!-- RIGHT -->
+    <div class="right">
+        <img src="/images/login.png" alt="Illustration">
+    </div>
+
+</div>
+
+<script src="/js/auth.js"></script>
+
+<script>
+    // SHOW / HIDE PASSWORD
+    function togglePassword(){
+        const pwd = document.getElementById("password");
+        const toggle = document.querySelector(".toggle-password");
+
+        if(pwd.type === "password"){
+            pwd.type = "text";
+            toggle.innerText = "Hide";
+        } else {
+            pwd.type = "password";
+            toggle.innerText = "Show";
+        }
+    }
+
+    // GOOGLE LOGIN PLACEHOLDER (PROFESSIONAL)
+    function googleLogin(){
+        alert(
+          "Google Login is planned using OAuth 2.0.\n" +
+          "It requires Google Developer Console setup.\n\n" +
+          "This is intentionally kept as a placeholder."
+        );
+    }
+</script>
+
+</body>
+</html>

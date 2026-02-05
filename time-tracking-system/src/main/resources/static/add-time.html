@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Add Time</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <style>
+
+        /* RESET */
+        *{
+            margin:0;
+            padding:0;
+            box-sizing:border-box;
+            font-family: "Segoe UI", sans-serif;
+        }
+
+        /* BODY BACKGROUND */
+       body {
+    min-height: 100vh;
+    background:
+      linear-gradient(
+        rgba(255,255,255,0.2),
+        rgba(255,255,255,0.2)
+      ),
+      url("/images/bg-blue.jpg");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+        /* CARD */
+        .container{
+            width:60%;
+            max-width:600px;
+            background:rgba(255,255,255,0.85);
+            backdrop-filter:blur(8px);
+            border-radius:20px;
+            padding:30px;
+            box-shadow:0 12px 35px rgba(0,0,0,0.4);
+        }
+
+        /* TITLE */
+        h2{
+            text-align:center;
+            font-size:26px;
+            margin-bottom:8px;
+        }
+
+        p{
+            text-align:center;
+            color:#444;
+            margin-bottom:20px;
+        }
+
+        /* FORM GRID */
+        .form-grid{
+            display:grid;
+            grid-template-columns:1fr;
+            gap:15px;
+        }
+
+        /* TIME ROW */
+        .time-row{
+            display:grid;
+            grid-template-columns:1fr 1fr;
+            gap:15px;
+        }
+
+        /* INPUTS */
+        .input-box{
+            display:flex;
+            flex-direction:column;
+        }
+
+        .input-box label{
+            font-size:14px;
+            font-weight:600;
+        }
+
+        .input-box input,
+        .input-box textarea{
+            padding:10px;
+            border-radius:8px;
+            border:1px solid #bbb;
+            margin-top:5px;
+            font-size:14px;
+        }
+
+        /* TEXTAREA */
+        textarea{
+            resize:none;
+            height:70px;
+        }
+
+        /* BUTTON */
+        .save-btn{
+            width:100%;
+            background:#4b7bec;
+            color:white;
+            padding:12px;
+            border:none;
+            border-radius:10px;
+            font-size:15px;
+            cursor:pointer;
+            margin-top:15px;
+        }
+
+        .save-btn:hover{
+            background:#3867d6;
+        }
+
+        /* BACK LINK */
+        .back{
+            text-align:center;
+            margin-top:12px;
+        }
+
+        .back a{
+            text-decoration:none;
+            color:#333;
+            font-weight:bold;
+        }
+
+        /* RESPONSIVE */
+        @media(max-width:600px){
+            .container{
+                width:90%;
+            }
+            .time-row{
+                grid-template-columns:1fr;
+            }
+        }
+
+    </style>
+</head>
+
+<body>
+
+<!-- 🔐 AUTH GUARD -->
+<script>
+    const token = localStorage.getItem("token");
+    if (!token) {
+        window.location.href = "/login.html";
+    }
+</script>
+
+<div class="container">
+
+    <h2>Add Work Time</h2>
+    <p>Enter your daily working hours</p>
+
+    <form onsubmit="return false;">
+
+        <div class="form-grid">
+
+            <div class="input-box">
+                <label>Date</label>
+                <input type="date" id="date">
+            </div>
+
+            <div class="time-row">
+
+                <div class="input-box">
+                    <label>Start Time</label>
+                    <input type="time" id="startTime">
+                </div>
+
+                <div class="input-box">
+                    <label>End Time</label>
+                    <input type="time" id="endTime">
+                </div>
+
+            </div>
+
+            <div class="input-box">
+                <label>Task Description</label>
+                <textarea id="description" placeholder="Describe your work..."></textarea>
+            </div>
+
+        </div>
+
+        <button class="save-btn" type="button" onclick="saveTime()">
+
+        </button>
+
+        <div class="back">
+            <a href="/dashboard.html">⬅ Back to Dashboard</a>
+        </div>
+
+    </form>
+
+</div>
+<script src="/js/add-time.js"></script>
+
+</body>
+</html>
